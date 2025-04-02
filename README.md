@@ -16,7 +16,7 @@ Este es un sistema web full stack diseñado para la administración de gimnasios
 
 ## Tema
 ### Descripción
-*2 a 6 líneas describiendo el negocio (menos es más)*
+Sistema web para la gestión de gimnasios. Permite la administración de usuarios (socios, entrenadores, administradores), rutinas de entrenamiento, reservas de clases y control de pagos y membresías.
 
 ### Modelo
 ![imagen del modelo]()
