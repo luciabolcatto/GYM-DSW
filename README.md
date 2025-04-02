@@ -8,7 +8,7 @@ Este es un sistema web full stack diseñado para la administración de gimnasios
 * 51392 - Rallip Sánchez Ismael
 * 51027 - Arce Nahuel
 * 52115 - Soria Marian
-
+* 50947 - Bolcatto Lucía Belén
 ### Repositorios
 * [frontend app](http://hyperlinkToGihubOrGitlab)
 * [backend app](http://hyperlinkToGihubOrGitlab)
