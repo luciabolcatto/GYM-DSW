@@ -19,7 +19,7 @@ Este es un sistema web full stack diseñado para la administración de gimnasios
 Sistema web para la gestión de gimnasios. Permite la administración de usuarios (socios, entrenadores, administradores), rutinas de entrenamiento, reservas de clases y control de pagos y membresías.
 
 ### Modelo
-![imagen del modelo](DER-GYM.drawio (2).png)
+![imagen del modelo](images/DER-GYM.drawio (2).png)
 
 *Nota*: incluir un link con la imagen de un modelo, puede ser modelo de dominio, diagrama de clases, DER. Si lo prefieren pueden utilizar diagramas con [Mermaid](https://mermaid.js.org) en lugar de imágenes.
 
