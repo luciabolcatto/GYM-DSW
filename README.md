@@ -40,7 +40,7 @@ Regularidad:
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD | A definir <br><br><br><br><br><br>|
+|CRUD | A definir <br><br>|
 |CUU/Epic| A definir <br><br>|
 
 
