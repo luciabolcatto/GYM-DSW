@@ -1,14 +1,13 @@
 # GYM-DSW
  Sistema de Gestión para Gimnasios 
 # Propuesta TP DSW
-Este es un sistema web full stack diseñado para la administración de gimnasios. Permite gestionar usuarios, planes de entrenamiento, reservas de clases, membresías y seguimiento del progreso físico.
-
+Este es un sistema web full stack diseñado para la administración de gimnasios. Permite gestionar usuarios, planes de entrenamiento, reservas de clases y membresías. 
 ## Grupo
 ### Integrantes
-* 51392 - Rallip Sánchez Ismael
 * 51027 - Arce Nahuel
-* 52115 - Soria Marian
 * 50947 - Bolcatto Lucía Belén
+* 51392 - Rallip Sánchez Ismael
+  
 ### Repositorios
 * [frontend app](http://hyperlinkToGihubOrGitlab)
 * [backend app](http://hyperlinkToGihubOrGitlab)
@@ -41,8 +40,8 @@ Regularidad:
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Tipo Habitacion<br>2. CRUD Servicio<br>3. CRUD Localidad<br>4. CRUD Provincia<br>5. CRUD Habitación<br>6. CRUD Empleado<br>7. CRUD Cliente|
-|CUU/Epic|1. Reservar una habitación para la estadía<br>2. Realizar el check-in de una reserva<br>3. Realizar el check-out y facturación de estadía y servicios|
+|CRUD | a definir <br><br><br><br>n<br><br>|
+|CUU/Epic| a definir <br>2. <br>|
 
 
 ### Alcance Adicional Voluntario
