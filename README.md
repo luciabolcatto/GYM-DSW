@@ -40,8 +40,8 @@ Regularidad:
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD | a definir <br><br><br><br>n<br><br>|
-|CUU/Epic| a definir <br>2. <br>|
+|CRUD | a definir <br><br><br><br><br><br>|
+|CUU/Epic| a definir <br><br>|
 
 
 ### Alcance Adicional Voluntario
@@ -50,6 +50,6 @@ Adicionales para Aprobación
 
 |Req|Detalle|
 |:-|:-|
-|Listados |1. Estadía del día filtrado por fecha muestra, cliente, habitaciones y estado <br>2. Reservas filtradas por cliente muestra datos del cliente y de cada reserve fechas, estado cantidad de habitaciones y huespedes|
-|CUU/Epic|1. Consumir servicios<br>2. Cancelación de reserva|
-|Otros|1. Envío de recordatorio de reserva por email|
+|Listados | a definir <br>|
+|CUU/Epic|1. Cancelacón reserva <br>|
+|Otros|1. Notificación previa a turno |
