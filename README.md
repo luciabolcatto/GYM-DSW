@@ -1,7 +1,7 @@
 # GYM-DSW
  Sistema de Gestión para Gimnasios 
 # Propuesta TP DSW
-Este es un sistema web full stack diseñado para la administración de gimnasios. Permite gestionar usuarios, planes de entrenamiento, reservas de clases y membresías. 
+Este es un sistema web full stack diseñado para la administración de gimnasios. Permite gestionar usuarios, planes de entrenamiento, reservas de clases y planes. 
 ## Grupo
 ### Integrantes
 * 51027 - Arce Nahuel
@@ -31,10 +31,10 @@ Sistema web para la gestión de gimnasios. Permite la administración de usuario
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Tipo Habitacion<br>2. CRUD Servicio<br>3. CRUD Localidad|
-|CRUD dependiente|1. CRUD Habitación {depende de} CRUD Tipo Habitacion<br>2. CRUD Cliente {depende de} CRUD Localidad|
-|Listado<br>+<br>detalle| 1. Listado de habitaciones filtrado por tipo de habitación, muestra nro y tipo de habitación => detalle CRUD Habitacion<br> 2. Listado de reservas filtrado por rango de fecha, muestra nro de habitación, fecha inicio y fin estadía, estado y nombre del cliente => detalle muestra datos completos de la reserva y del cliente|
-|CUU/Epic|1. Reservar una habitación para la estadía<br>2. Realizar el check-in de una reserva|
+|CRUD simple|1. CRUD Actividad <br>2. CRUD Plan <br>3. CRUD Usuario |
+|CRUD dependiente|1. CRUD Precio {depende de} CRUD Plan <br>2. CRUD Clase {depende de} CRUD actividad |
+|Listado<br>+<br>detalle| 1. Listado de usuarios fltrado por planes, muestra idU Usuario, id Actividad y detalles del mismo. => detalle CRUD Plan, CRUD Actividad, Crud Usuario <br> 2. Listado de reservas filtradas por clases, muestra id Actividad, idU Usuario, fecha-hora-ini y fecha-hora-fin Clase => detalle CRUD Usuario y CRUD actividad |
+|CUU/Epic|1. Reservar una clase. <br>2. Contratar plan |
 
 
 Adicionales para Aprobación
