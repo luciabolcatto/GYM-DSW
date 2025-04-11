@@ -33,7 +33,7 @@ Regularidad:
 |:-|:-|
 |CRUD simple|1. CRUD Actividad <br>2. CRUD Plan <br>3. CRUD Usuario |
 |CRUD dependiente|1. CRUD Precio {depende de} CRUD Plan <br>2. CRUD Clase {depende de} CRUD Actividad |
-|Listado<br>+<br>detalle| 1. Listado de usuarios fltrado por planes, muestra id Usuario, nombre y aepllido de usuario, id planes  , nombre del plan , descripcion del plan y detalles del mismo. => detalle CRUD Plan,  Crud Usuario <br> 2. Listado de reservas filtradas por clases, muestra id Actividad, nombre actividad , idU Usuario, nombre y apellido de usuario, fecha-hora-ini y fecha-hora-fin Clase => detalle CRUD Usuario , CRUD Actividad y CRUD clase |
+|Listado<br>+<br>detalle| 1. Listado de usuarios fltrado por planes, muestra id Usuario, nombre y aepllido de usuario, id planes  , nombre del plan , descripcion del plan y detalles del mismo. => detalle CRUD Plan,  CRUD Usuario <br> 2. Listado de reservas filtradas por clases, muestra id Actividad, nombre Actividad , idU Usuario, nombre y apellido Usuario, fecha-hora-ini y fecha-hora-fin Clase => detalle CRUD Usuario , CRUD Actividad y CRUD Clase |
 |CUU/Epic|1. Reservar una clase. <br>2. Contratar plan |
 
 
