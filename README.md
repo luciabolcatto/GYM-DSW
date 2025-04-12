@@ -15,7 +15,7 @@ Este es un sistema web full stack diseñado para la administración de gimnasios
 
 ## Tema
 ### Descripción
-Sistema web para la gestión de gimnasios. Permite la administración de usuarios (socios, entrenadores, ), rutinas de entrenamiento, reservas de clases y control de pagos y planes.
+Sistema web para la gestión de gimnasios. Permite la administración de usuarios (socios, entrenadores ), reservas de clases y control de pagos .
 
 ### Modelo
 ![imagen del modelo](images/DER.png)
@@ -31,17 +31,17 @@ Sistema web para la gestión de gimnasios. Permite la administración de usuario
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Actividad <br>2. CRUD Plan <br>3. CRUD Usuario |
-|CRUD dependiente|1. CRUD Precio {depende de} CRUD Plan <br>2. CRUD Clase {depende de} CRUD Actividad |
-|Listado<br>+<br>detalle| 1. Listado de usuarios fltrado por planes, muestra id Usuario, nombre y aepllido de usuario, id planes , nombre del plan, descripcion del plan y detalles del mismo. => detalle CRUD Plan,  CRUD Usuario <br> 2. Listado de reservas filtradas por clases, muestra id Actividad, nombre Actividad , idU Usuario, nombre y apellido Usuario, fecha-hora-ini y fecha-hora-fin Clase => detalle CRUD Usuario , CRUD Actividad y CRUD Clase |
-|CUU/Epic|1. Reservar una clase. <br>2. Contratar plan |
+|CRUD simple|1. CRUD Actividad <br>2. CRUD Membresia <br>3. CRUD Usuario <br>|
+|CRUD dependiente|1. CRUD Precio {depende de} CRUD Membresia <br>2. CRUD Clase {depende de} CRUD Actividad |
+|Listado<br>+<br>detalle| 1. Listado de usuarios filtrado por estado, muestra id Usuario, nombre y apellido Usuario, estado Usuario y nombre Membresia. => detalle CRUD Membresia,  CRUD Usuario <br> 2. Listado de reservas filtradas por clases, muestra id Actividad, nombre Actividad , id Usuario, nombre y apellido Usuario, fecha-hora-ini y fecha-hora-fin Clase => detalle CRUD Usuario , CRUD Actividad y CRUD Clase |
+|CUU/Epic|1. Reservar una clase. <br>2. Contratar Membresia|
 
 
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD | A definir <br><br>|
-|CUU/Epic| A definir <br><br>|
+|CRUD | CRUD Entrenador <br><br>|
+|CUU/Epic|1. Pago digital  <br> 2.Comentario <br>3.Valoración<br>|
 
 
 ### Alcance Adicional Voluntario
@@ -51,4 +51,4 @@ Adicionales para Aprobación
 |:-|:-|
 |Listados | A definir <br>|
 |CUU/Epic|1. Cancelacón reserva <br>|
-|Otros|1. Notificación previa a turno |
+|Otros|1. Notificación previa a turno <br> 2. Chatbot |
