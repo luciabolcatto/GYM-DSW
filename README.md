@@ -33,7 +33,7 @@ Regularidad:
 |:-|:-|
 |CRUD simple|1. CRUD Actividad <br>2. CRUD Membresia <br>3. CRUD Usuario (Cliente) <br>|
 |CRUD dependiente|1. CRUD Entrenador {depende de} CRUD Actividad <br>2. CRUD Clase {depende de} CRUD Entrenador |
-|Listado<br>+<br>detalle| 1. Listado de usuarios filtrado por estado, muestra id Usuario, nombre y apellido Usuario, fecha_hora inicio , fecha_hora fin y  estado de  Contrato y nombre de Membresia. => detalle CRUD Membresia,  CRUD Usuario <br> 2. Listado de reservas filtradas por clases, muestra id_a Actividad, nombre Actividad , id_u Usuario, nombre y apellido Usuario, fecha-hora-ini y fecha-hora-fin Clase , fecha_hora y estaado de la resrva => detalle CRUD Usuario , CRUD Actividad, CRUD reserva  y CRUD Clase |
+|Listado<br>+<br>detalle| 1. Listado de usuarios filtrado por estado, muestra id Usuario, nombre y apellido Usuario, fecha_hora inicio , fecha_hora fin , fechaCancelacion , fechaPago , metodoPago y  estado de  Contrato y nombre de Membresia. => detalle CRUD Membresia,  CRUD Usuario <br> 2. Listado de reservas filtradas por clases, muestra id_a Actividad, nombre Actividad , id_u Usuario, nombre y apellido Usuario, fecha-hora-ini y fecha-hora-fin Clase , fecha_hora y estaado de la resrva => detalle CRUD Usuario , CRUD Actividad, CRUD reserva  y CRUD Clase |
 |CUU/Epic|1. Reservar clase. <br>2. Contratar Membresia|
 
 
