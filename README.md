@@ -27,7 +27,7 @@ Sistema web para la gestión de gimnasios. Permite la administración de usuario
 
 ### Modelo
 
-![imagen del modelo](images\GYM.jpg)
+![imagen del modelo]([images\GYM.jpg](https://github.com/luciabolcatto/GYM-DSW/blob/main/images/GYM.jpg))
 
 ## Alcance Funcional
 
