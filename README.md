@@ -29,10 +29,11 @@ Para conocer más detalles sobre los objetivos y el alcance funcional del sistem
 bash
    pnpm install
 
-2. Variables de Entorno (.env):
-Configurar las claves de MongoDB, JWT, Stripe y Gmail.
+2. Cargar datos de pueba (seed):
+bash
+   pnpm run seed
 
-3. Ejecutar en modo desarrollo:
+4. Ejecutar en modo desarrollo:
 bash
    pnpm run dev 
 
