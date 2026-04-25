@@ -25,23 +25,30 @@ Para conocer más detalles sobre los objetivos y el alcance funcional del sistem
 
 ### Configuración del Entorno (Backend)
 
-1. **Instalar dependencias:**
-bash
-   pnpm install
+1. **Instalar dependencias:** <br>
+bash <br>
+   pnpm install <br> 
 
-2. Cargar datos de pueba (seed):
-bash
-   pnpm run seed
+2. **Cargar datos de pueba (seed):** <br>
+bash <br>
+   pnpm run seed <br> 
 
-4. Ejecutar en modo desarrollo:
-bash
-   pnpm run dev 
+4. **Ejecutar en modo desarrollo:** <br>
+bash <br>
+   pnpm run dev  <br>
 
 ### Credenciales de Prueba
 Para testear el flujo de pagos (Stripe Test Mode):
 - [Tarjeta] 4000 0003 2000 0021
 - [CVC] 123
 - [EXP] Cualquier fecha futura.
+
+### Cuentas de Prueba
+* **Contraseña de todos los usuarios :**  `123456` <br>
+* **Socio con Contrato Activo:** `pedro@mail.com` (Tiene historial de pagos y reservas).
+* **Socio con Contrato Vencido:** `diego@mail.com` (Ideal para probar restricciones).
+* **Socio Nuevo (Sin Contrato):** `esperanza@mail.com` (Ideal para probar el flujo de compra con Stripe).
+* **Administrador:** `admin@gym.com` / `admin123`
 
 ### Funcionalidades Destacadas
 - [Pagos Seguros]: Sincronización automática de membresías vía Webhooks.
