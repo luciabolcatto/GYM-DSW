@@ -3,8 +3,8 @@
 Sistema full stack para la gestión integral de gimnasios, desarrollado como proyecto para la materia **Desarrollo de Software** (UTN FRRO).
 
 ### Demo en Vivo
-- [Frontend]: https://frontend-app-gym.vercel.app/
-- [Backend API]: https://backendappgym.onrender.com 
+- [Frontend](https://frontend-app-gym.vercel.app/)
+- [Backend API](https://backendappgym.onrender.com) 
 
 ### Repositorios
 - [frontend app](https://github.com/luciabolcatto/frontendAppGym.git)
@@ -26,15 +26,15 @@ Para conocer más detalles sobre los objetivos y el alcance funcional del sistem
 ### Configuración del Entorno (Backend)
 
 1. **Instalar dependencias:**
-   ```bash
+bash
    pnpm install
 
 2. Variables de Entorno (.env):
 Configurar las claves de MongoDB, JWT, Stripe y Gmail.
 
 3. Ejecutar en modo desarrollo:
-Bash
-pnpm run dev
+bash
+   pnpm run dev 
 
 ### Credenciales de Prueba
 Para testear el flujo de pagos (Stripe Test Mode):
