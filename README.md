@@ -37,20 +37,20 @@ Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Actividad <br>2. CRUD Membresia <br>3. CRUD Usuario (Cliente) <br>|
-|CRUD dependiente|1. CRUD Entrenador {depende de} CRUD Actividad <br>2. CRUD Clase {depende de} CRUD Entrenador |
-|Listado<br>+<br>detalle| 1. Listado de usuarios filtrado por estado, muestra id Usuario, nombre y apellido Usuario, fecha_hora inicio , fecha_hora fin , fechaCancelacion , fechaPago , metodoPago y es[...]|
+|CRUD dependiente|1. CRUD Clase {depende de} CRUD Entrenador y CRUD Actividad <br>2. CRUD Contrato {depende de} CRUD Usuario y Membresia |
+|Listado<br>+<br>detalle| 1. Panel de Administración de Usuarios: Listado global de socios con filtros por estado (Activo/Inactivo). El detalle muestra: ID, datos de contacto, historial de pagos (metodoPago, stripeSessionId) y fechas de vigencia de su membresía.<br> 2. Grilla de Clases: Listado de clases programadas con filtro por actividad. El detalle permite ver el cupo real disponible y el entrenador asignado.|
 |CUU/Epic|1. Reservar clase. <br>2. Contratar Membresia|
 
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD | CRUD Precio <br><br>|
-|CUU/Epic|1. Cancelar reserva. <br>2. Contratar Membresia (Con restriccion y pago digital) <br>3. Valoración de Entrenadores <br>|
+|CRUD | CRUD Valoración <br> CRUD Entrenador <br>|
+|CUU/Epic|1. Cancelar reserva. <br> 2. Valoración de Entrenadores <br>3. Pago digital con Stripe <br>|
 
 ### Alcance Adicional Voluntario
 
 | Req      | Detalle                                                                                                                                                     |
 | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Listados | A definir <br>                                                                                                                                              |
+| Listados | 1.Perfil de Socio: Detalle de contratos activos e historial de reservas del usuario. <br>                                                                   |
 | CUU/Epic | 1. <br><br>                                                                                                                                                 |
-| Otros    | 1. Notificaciones de transacciones <br>2. Pago digital con stripe <br> 3. Recuperación de cuenta |
+| Otros    | 1. Automatización: Schedulers de Consistencia: Tareas programadas en el backend que cierran reservas iniciadas y vencen contratos automaticamente. <br> 2. Seguridad: Webhooks con Firma Digital: Validación de eventos de Stripe mediante secretos de firma para garantizar la integridad de las transacciones financieras. <br> 3. UX/Multimedia: Gestión de Archivos Estáticos: Carga de imágenes locales mediante Multer para personalizar actividades y perfiles. <br> 4. Servicio de Mailing: Recuperación de contraseña y avisos de transacciones mediante Nodemailer y Gmail. <br> Arquitectura Basada en Capas: Separación estricta de controladores, entidades y servicios para facilitar el mantenimiento y escalamiento. |
