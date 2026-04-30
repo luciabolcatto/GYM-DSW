@@ -20,6 +20,7 @@ Sistema full stack para la gestión integral de gimnasios, desarrollado como pro
 Para conocer más detalles sobre los objetivos y el alcance funcional del sistema, consultá:
 - [📄 Propuesta del Proyecto (Proposal)](./proposal.md)
 - [📊 Modelo de Dominio (DER)](./images/gym.jpg)
+- [📝 Casos de Uso Detallados](./docs/casos-uso.md)
 
 ---
 
