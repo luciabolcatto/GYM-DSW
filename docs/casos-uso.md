@@ -1,7 +1,6 @@
 # Documentación de Casos de Uso
 Este documento detalla la lógica de negocio y el flujo técnico de los principales Casos de Uso (CU) implementados en el sistema **GYM-DSW**.
 
----
 ### 1. Gestión de Membresías y Pagos (Stripe)
 *   **Descripción**: Permite al socio adquirir planes de entrenamiento mediante un flujo de pago digital seguro.
 *   **Flujo**: El socio elige un plan, el backend genera una sesión de **Stripe Checkout** y, tras el pago exitoso, un **Webhook** activa el contrato automáticamente.
@@ -28,7 +27,6 @@ Este documento detalla la lógica de negocio y el flujo técnico de los principa
     *   **Comportamiento**: Si ya existe una valoración, el controlador ejecuta un *update* del `rating` y `comentario`. Si no existe, realiza un *insert*. Esto garantiza una sola reseña por socio por entrenador.
     *   **Resumen de Datos**: El backend expone un endpoint de `resumen` que calcula el promedio decimal y la cantidad total de valoraciones para mostrar en el perfil del staff.
 
----
 ### ⚙️ Automatización de Fondo (Schedulers)
 *   **Cierre de Reservas**: Tareas programadas que transicionan reservas `PENDIENTES` a `CERRADAS` cuando el tiempo de cancelación ha expirado o la clase ha iniciado.
 *   **Control de Vencimientos**: Verificación periódica de la `fecha_hora_fin` de los contratos para actualizar su estado a `VENCIDO` de forma autónoma.
