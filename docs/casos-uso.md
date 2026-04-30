@@ -20,13 +20,13 @@ Este documento detalla la lógica de negocio y el flujo técnico de los principa
     *   **Regla de Negocio**: Validación temporal que impide cancelaciones si faltan menos de 30 minutos para el inicio de la clase.
     *   **Impacto**: Al cancelar, el estado de la reserva pasa a `CANCELADA` y se incrementa automáticamente el `cupo_disp` de la clase vinculada.
 
-### 4. Valoración de Entrenadores (Feedback)
+### 4. Valoración de Entrenadores 
 *   **Descripción**: Los socios califican (1 a 5 estrellas) y comentan el desempeño de los profesores.
 *   **Lógica Técnica (Upsert)**: 
     *   **Unicidad**: El sistema busca si ya existe una relación previa entre el `usuario` y el `entrenador`.
     *   **Comportamiento**: Si ya existe una valoración, el controlador ejecuta un *update* del `rating` y `comentario`. Si no existe, realiza un *insert*. Esto garantiza una sola reseña por socio por entrenador.
     *   **Resumen de Datos**: El backend expone un endpoint de `resumen` que calcula el promedio decimal y la cantidad total de valoraciones para mostrar en el perfil del staff.
 
-### ⚙️ Automatización de Fondo (Schedulers)
+###  Automatización de Fondo 
 *   **Cierre de Reservas**: Tareas programadas que transicionan reservas `PENDIENTES` a `CERRADAS` cuando el tiempo de cancelación ha expirado o la clase ha iniciado.
 *   **Control de Vencimientos**: Verificación periódica de la `fecha_hora_fin` de los contratos para actualizar su estado a `VENCIDO` de forma autónoma.
