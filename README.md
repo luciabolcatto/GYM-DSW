@@ -49,7 +49,7 @@ Para testear el flujo de pagos (Stripe Test Mode):
 * **Socio con Contrato Activo:** `pedro@mail.com` (Tiene historial de pagos y reservas).
 * **Socio con Contrato Vencido:** `diego@mail.com` (Ideal para probar restricciones).
 * **Socio Nuevo (Sin Contrato):** `esperanza@mail.com` (Ideal para probar el flujo de compra con Stripe).
-* **Administrador:** `admin@gym.com` / `admin123`
+* **Administrador:** `admin@gym.com` / `Miclavesegura`
 
 ### Funcionalidades Destacadas
 - **Pagos Seguros:** Sincronización automática de membresías vía Webhooks.
