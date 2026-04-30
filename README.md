@@ -52,6 +52,6 @@ Para testear el flujo de pagos (Stripe Test Mode):
 * **Administrador:** `admin@gym.com` / `admin123`
 
 ### Funcionalidades Destacadas
-- [Pagos Seguros]: Sincronización automática de membresías vía Webhooks.
-- [Schedulers]: Procesos automáticos de vencimiento de contratos y cierre de cupos.
-- [Feedback]: Sistema de valoración de entrenadores.
+- **Pagos Seguros:** Sincronización automática de membresías vía Webhooks.
+- **Schedulers:**  Procesos automáticos de vencimiento de contratos y cierre de cupos.
+- **Feedback:** Sistema de valoración de entrenadores.
