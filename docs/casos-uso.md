@@ -27,6 +27,6 @@ Este documento detalla la lógica de negocio y el flujo técnico de los principa
     *   **Comportamiento**: Si ya existe una valoración, el controlador ejecuta un *update* del `rating` y `comentario`. Si no existe, realiza un *insert*. Esto garantiza una sola reseña por socio por entrenador.
     *   **Resumen de Datos**: El backend expone un endpoint de `resumen` que calcula el promedio decimal y la cantidad total de valoraciones para mostrar en el perfil del staff.
 
-###  Automatización de Fondo 
+###  Automatización 
 *   **Cierre de Reservas**: Tareas programadas que transicionan reservas `PENDIENTES` a `CERRADAS` cuando el tiempo de cancelación ha expirado o la clase ha iniciado.
 *   **Control de Vencimientos**: Verificación periódica de la `fecha_hora_fin` de los contratos para actualizar su estado a `VENCIDO` de forma autónoma.
