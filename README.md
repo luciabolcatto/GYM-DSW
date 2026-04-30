@@ -11,10 +11,10 @@ Sistema full stack para la gestión integral de gimnasios, desarrollado como pro
 - [backend app](https://github.com/luciabolcatto/backendAppGym.git)
 
 ### Tecnologías Principales
-- [Backend] Node.js, TypeScript, MikroORM (MongoDB).
-- [Pagos] Stripe API (Checkout & Webhooks).
-- [Mailing] Nodemailer (Gmail).
-- [Frontend] React + Vite + Tailwind CSS.
+- **Backend:** Node.js, TypeScript, MikroORM (MongoDB).
+- **Pagos:** Stripe API (Checkout & Webhooks).
+- **Mailing:** Nodemailer (Gmail).
+- **Frontend:** React + Vite + Tailwind CSS.
 
 ### Documentación del Proyecto
 Para conocer más detalles sobre los objetivos y el alcance funcional del sistema, consultá:
@@ -40,9 +40,9 @@ bash <br>
 
 ### Credenciales de Prueba
 Para testear el flujo de pagos (Stripe Test Mode):
-- [Tarjeta] 4000 0003 2000 0021
-- [CVC] 123
-- [EXP] Cualquier fecha futura.
+- **Tarjeta:** 4000 0003 2000 0021
+- **CVC:** 123
+- **EXP:** Cualquier fecha futura.
 
 ### Cuentas de Prueba
 * **Contraseña de todos los usuarios :**  `123456` <br>
