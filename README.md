@@ -22,6 +22,8 @@ Para conocer más detalles sobre los objetivos y el alcance funcional del sistem
 - [📊 Modelo de Dominio (DER)](./images/gym.jpg)
 - [📝 Casos de Uso Detallados](./docs/casos-uso.md)
 - [📝 Documentacion de la API](./docs/api.md)
+- [🧪 Evidencia de Testing Automatizado](./docs/test.md)
+
 
 ---
 
