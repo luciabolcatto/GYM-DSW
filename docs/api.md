@@ -5,7 +5,7 @@
 1. [Información General](#información-general)
 2. [Autenticación y Autorización](#autenticación-y-autorización)
 3. [Endpoints por Entidad](#endpoints-por-entidad)
-4. [Ver Información Adicional](#información-adicional)
+4. [Información Adicional](#información-adicional)
 
 ---
 
@@ -1498,21 +1498,3 @@
 - **Formato**: URL en respuesta es `/uploads/[entidad]/[id]/[archivo]` (sin `/public/`)
 - **Archivos soportados**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.avif`
 
-### Variables de entorno necesarias
-
-- `PORT`: Puerto del servidor (default: 5500)
-- `JWT_SECRET`: Clave para firmar JWT de usuarios
-- `ADMIN_SECRET`: Clave para firmar JWT de admin
-- `FRONTEND_URL`: URL del frontend (CORS)
-- `CORS_ORIGIN`: Orígenes CORS adicionales
-- `DB_URL`: URL de conexión a MongoDB
-
-### Archivos Públicos
-
-Las imágenes subidas se sirven desde `/public`, por ejemplo:
-
-- `http://localhost:5500/public/uploads/usuario/{id}/imagen.jpg`
-- `http://localhost:5500/public/uploads/entrenador/{id}/foto.jpg`
-- `http://localhost:5500/public/uploads/actividad/{id}/imagen.jpg`
-
-**Formatos soportados**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.avif`
