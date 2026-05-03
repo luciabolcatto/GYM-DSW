@@ -10,18 +10,18 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 ### Flujo Completo del Usuario (E2E)
 - **Comando:** `pnpm test:e2e`
 - **Descripción:** Simula paso a paso el recorrido de un usuario real: registro, contratación de membresía, pago y reserva de una clase.
-- **Evidencia:** [🎥 Ver video de la ejecución (e2e.mp4)](./images/e2e.mp4)
+- **Evidencia:** [🎥 Ver video de la ejecución (e2e.mp4)](../images/e2e.mp4)
 
 ### Modal de Pagos
 - **Comando:** `pnpm test:pago`
 - **Descripción:** Pruebas intensivas sobre el componente `PagoModal`, validando el manejo de errores, métodos no soportados y el redireccionamiento a Stripe.
-- **Evidencia:** [🎥 Ver video de la ejecución (pago.mp4)](./images/pago.mp4)
+- **Evidencia:** [🎥 Ver video de la ejecución (pago.mp4)](../images/pago.mp4)
 
 ### Sistema de Valoraciones
 - **Comando:** `pnpm test:star`
 - **Descripción:** Ejecuta tests unitarios sobre el componente de valoraciones y el renderizado de estrellas según el puntaje.
 - **Evidencia:** 
-  ![Test Valoraciones](./images/star.png)
+  ![Test Valoraciones](../images/star.png)
 
 ---
 
@@ -34,30 +34,30 @@ Estos tests levantan la base de datos de prueba y ejecutan el ciclo de vida comp
 
 - **Comando:** `pnpm test:integration`
 - **Descripción:** Pruebas de flujo completo de pago manual (Stripe) y su impacto en la base de datos.
-- **Evidencia:** [🎥 Ver video de la ejecución (i.mp4)](./images/i.mp4)
+- **Evidencia:** [🎥 Ver video de la ejecución (i.mp4)](../images/i.mp4)
 
 - **Comando:** `pnpm test:integration:efectivo`
 - **Descripción:** Simulación del flujo de pago automático en efectivo .
-- **Evidencia:** [🎥 Ver video de la ejecución (ie.mp4)](./images/ie.mp4)
+- **Evidencia:** [🎥 Ver video de la ejecución (ie.mp4)](../images/ie.mp4)
 
 ### Pruebas Unitarias por Dominio
 - **Autenticación y Seguridad**
   - **Comando:** `pnpm test:auth`
   - **Descripción:** Pruebas de generación de tokens JWT, encriptación de contraseñas y middleware de seguridad.
   - **Evidencia:** 
-    ![Test Auth](./images/auth.png)
+    ![Test Auth](../images/auth.png)
 
 - ** Reservas **
   - **Comando:** `pnpm test:reserva`
   - **Descripción:** Verifica las reglas de negocio para crear y modificar reservas.
   - **Evidencia:** 
-    ![Test Reservas](./images/reserva.png)
+    ![Test Reservas](../images/reserva.png)
 
 - **Contratos**
   - **Comando:** `pnpm test:contrato`
   - **Descripción:** Comprueba la lógica de contratacion.
   - **Evidencia:** 
-    ![Test Contratos](./images/contrato.png)
+    ![Test Contratos](../images/contrato.png)
 
 - **Controlador de Usuarios**
   - **Comando:** `pnpm test:usuario`
