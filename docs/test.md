@@ -63,5 +63,5 @@ Estos tests levantan la base de datos de prueba y ejecutan el ciclo de vida comp
   - **Comando:** `pnpm test:usuario`
   - **Descripción:** Evalúa la sanitización de datos ingresados, el flujo de inicio de sesión (login) y la correcta gestión de las cuentas.
   - **Evidencia:** 
-    ![Test Usuarios](./images/usuario.png)
+    ![Test Usuarios](../images/usuario.png)
 
