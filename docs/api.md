@@ -5,7 +5,7 @@
 1. [Información General](#información-general)
 2. [Autenticación y Autorización](#autenticación-y-autorización)
 3. [Endpoints por Entidad](#endpoints-por-entidad)
-4. [Ver Información Adicional](#información-adicional)
+4. [Información Adicional](#información-adicional)
 
 ---
 
