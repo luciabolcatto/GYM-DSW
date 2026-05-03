@@ -5,7 +5,7 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 
 ---
 
-## 💻 1. Pruebas de Frontend (React + Jest)
+## 💻 1. Pruebas de Frontend 
  Las pruebas  se enfocaron en la renderización de componentes complejos, simulación de interacciones del usuario y pruebas End-to-End (E2E) simulando el flujo de negocio completo.
 ### Flujo Completo del Usuario (E2E)
 - **Comando:** `pnpm test:e2e`
@@ -27,7 +27,7 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 
 ---
 
-## ⚙️ 2. Pruebas de Backend (Node.js + Jest)
+## ⚙️ 2. Pruebas de Backend 
 
 La API cuenta con pruebas unitarias y pruebas de integración usando una base de datos en memoria (`gym_test`) para evitar ensuciar los datos de producción.
 
