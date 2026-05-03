@@ -22,8 +22,8 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 ### Sistema de Valoraciones
 - **Comando:** `pnpm test:star`
 - **Descripción:** Ejecuta tests unitarios sobre el componente de valoraciones y el renderizado de estrellas según el puntaje.
-- **Evidencia:** 
-  [Test Valoraciones](../images/star.png)
+- **Evidencia:**
+  ![Test Valoraciones](../images/star.png)
 
 ---
 
