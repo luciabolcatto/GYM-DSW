@@ -23,7 +23,6 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 - **Comando:** `pnpm test:star`
 - **Descripción:** Ejecuta tests unitarios sobre el componente de valoraciones y el renderizado de estrellas según el puntaje.
 - **Evidencia:**
--
 - ![Test Valoraciones](../images/star.png)
 
 ---
@@ -50,27 +49,23 @@ Estos tests levantan la base de datos de prueba y ejecutan el ciclo de vida comp
   - **Comando:** `pnpm test:auth`
   - **Descripción:** Pruebas de generación de tokens JWT, encriptación de contraseñas y middleware de seguridad.
   - **Evidencia:**
-  -
   - ![Test Auth](../images/auth.png)
 
 - ** Reservas **
   - **Comando:** `pnpm test:reserva`
   - **Descripción:** Verifica las reglas de negocio para crear y modificar reservas.
   - **Evidencia:**
-  -
   - ![Test Reservas](../images/reserva.png)
 
 - **Contratos**
   - **Comando:** `pnpm test:contrato`
   - **Descripción:** Comprueba la lógica de contratacion.
   - **Evidencia:**
-  -
   - ![Test Contratos](../images/contrato.png)
 
 - **Controlador de Usuarios**
   - **Comando:** `pnpm test:usuario`
   - **Descripción:** Evalúa la sanitización de datos ingresados, el flujo de inicio de sesión (login) y la correcta gestión de las cuentas.
   - **Evidencia:**
-  -
   - ![Test Usuarios](../images/usuario.png)
 
