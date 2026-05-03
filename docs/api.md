@@ -4,10 +4,8 @@
 
 1. [Información General](#información-general)
 2. [Autenticación y Autorización](#autenticación-y-autorización)
-3. [Modelos de Datos](#modelos-de-datos)
-4. [Endpoints por Entidad](#endpoints-por-entidad)
-5. [Códigos de Error Personalizados](#códigos-de-error-personalizados)
-6. [Validaciones y Reglas de Negocio](#validaciones-y-reglas-de-negocio)
+3. [Endpoints por Entidad](#endpoints-por-entidad)
+4. [Ver Información Adicional](#información-adicional)
 
 ---
 
@@ -75,237 +73,6 @@
 | `403`  | Forbidden - Permiso insuficiente         | Usuario intenta modificar reserva ajena |
 | `404`  | Not Found - Recurso no existe            | GET con ID inexistente                  |
 | `500`  | Server Error - Error inesperado          | Excepción en servidor                   |
-
----
-
-## Modelos de Datos
-
-### 1. **Usuario**
-
-#### Campos
-
-| Campo             | Tipo   | Requerido | Notas                                                          |
-| ----------------- | ------ | --------- | -------------------------------------------------------------- |
-| `id`              | string | Sí        | ObjectId serializado (PK)                                      |
-| `nombre`          | string | Sí        | Min 1 carácter                                                 |
-| `apellido`        | string | Sí        | Min 1 carácter                                                 |
-| `tel`             | number | Sí        | Solo dígitos                                                   |
-| `mail`            | string | Sí        | Formato válido RFC5322 (regex: `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`) |
-| `contrasena`      | string | Sí        | Bcrypt hashed (min 6 caracteres en plain)                      |
-| `fotoPerfil`      | string | No        | URL relativa ej: `/uploads/usuario/{id}/image.jpg`             |
-| `resetCode`       | string | No        | Bcrypt hash de código de recuperación                          |
-| `resetCodeExpiry` | Date   | No        | Expira en 15 minutos                                           |
-| `resetAttempts`   | number | No        | Máximo 3 intentos                                              |
-
-#### Relaciones
-
-- `contratos` (1:N) → Contrato
-- `reservas` (1:N) → Reserva
-
-#### Validaciones
-
-- Email único
-- Contraseña mínimo 6 caracteres
-- Teléfono solo dígitos
-- Nombre y apellido no vacíos
-
----
-
-### 2. **Contrato**
-
-#### Estados
-
-```typescript
-enum EstadoContrato {
-  PENDIENTE = 'pendiente', // Esperando pago
-  PAGADO = 'pagado', // Pago completado, contrato activo
-  CANCELADO = 'cancelado', // Usuario canceló
-  VENCIDO = 'vencido', // Fecha fin pasó
-}
-```
-
-#### Campos
-
-| Campo              | Tipo           | Requerido | Notas                                    |
-| ------------------ | -------------- | --------- | ---------------------------------------- |
-| `id`               | string         | Sí        | ObjectId serializado (PK)                |
-| `fecha_hora_ini`   | Date           | Sí        | Default: now                             |
-| `fecha_hora_fin`   | Date           | Sí        | fecha_ini + (membresia.meses \* 30 días) |
-| `estado`           | enum           | Sí        | Default: PENDIENTE                       |
-| `fechaPago`        | Date           | No        | Se registra al completar pago            |
-| `fechaCancelacion` | Date           | No        | Se registra al cancelar                  |
-| `metodoPago`       | string         | No        | Ej: "stripe", "efectivo"                 |
-| `stripeSessionId`  | string         | No        | ID de sesión de Stripe                   |
-| `usuario`          | Rel<Usuario>   | Sí        | FK → Usuario                             |
-| `membresia`        | Rel<Membresia> | Sí        | FK → Membresia                           |
-
-#### Relaciones
-
-- `usuario` (N:1) → Usuario
-- `membresia` (N:1) → Membresia
-
-#### Validaciones
-
-- Máximo 2 contratos PENDIENTES por usuario
-- Renovación automática: si existe contrato vigente (PAGADO/PENDIENTE con fecha_fin > now), nuevo contrato inicia cuando termina el anterior
-- Solo se pueden cancelar contratos PENDIENTE
-- Verificación automática de vencimientos (PAGADO → VENCIDO cuando fecha_fin < now)
-
----
-
-### 3. **Reserva**
-
-#### Estados
-
-```typescript
-enum EstadoReserva {
-  PENDIENTE = 'pendiente', // Reserva confirmada, esperando clase
-  CERRADA = 'cerrada', // Clase iniciada (status automático 30 min antes)
-  CANCELADA = 'cancelada', // Usuario canceló
-}
-```
-
-#### Campos
-
-| Campo        | Tipo         | Requerido | Notas                                  |
-| ------------ | ------------ | --------- | -------------------------------------- |
-| `id`         | string       | Sí        | ObjectId serializado (PK)              |
-| `fecha_hora` | Date         | Sí        | Timestamp de cuando se hizo la reserva |
-| `estado`     | enum         | Sí        | Default: PENDIENTE                     |
-| `usuario`    | Rel<Usuario> | Sí        | FK → Usuario                           |
-| `clase`      | Rel<Clase>   | Sí        | FK → Clase                             |
-
-#### Relaciones
-
-- `usuario` (N:1) → Usuario
-- `clase` (N:1) → Clase
-
-#### Validaciones
-
-- **Cupo disponible**: `clase.cupo_disp > 0`
-- **Tiempo de reserva**: No permitir dentro de 30 min antes del inicio de clase
-- **Contrato vigente**: Usuario debe tener Contrato PAGADO cuya fecha_ini ≤ fecha_clase < fecha_fin
-- **Cancelación**: No permitir dentro de 30 min antes del inicio
-- **Transiciones de estado**:
-  - PENDIENTE → CERRADA (automático 30 min antes)
-  - PENDIENTE → CANCELADA (manual)
-  - CANCELADA → ❌ No se puede cambiar
-  - CERRADA + intento CANCELADA → ❌ Error
-- **Propiedad**: Solo el dueño (usuario) puede modificar su reserva
-- **Liberación de cupo**: Al cancelar, incrementar `clase.cupo_disp`
-
----
-
-### 4. **Actividad**
-
-#### Campos
-
-| Campo         | Tipo   | Requerido | Notas                                                       |
-| ------------- | ------ | --------- | ----------------------------------------------------------- |
-| `id`          | string | Sí        | ObjectId serializado (PK)                                   |
-| `nombre`      | string | Sí        | Unique                                                      |
-| `descripcion` | string | Sí        | -                                                           |
-| `cupo`        | number | Sí        | Cupo total (referencia)                                     |
-| `imagenUrl`   | string | No        | URL relativa ej: `/public/uploads/actividad/{id}/image.jpg` |
-
-#### Relaciones
-
-- `entrenadores` (M:M, owner) → Entrenador
-- `clases` (1:N) → Clase
-
-#### Validaciones
-
-- Nombre único
-- Descripción obligatoria
-
----
-
-### 5. **Clase**
-
-#### Campos
-
-| Campo            | Tipo            | Requerido | Notas                                          |
-| ---------------- | --------------- | --------- | ---------------------------------------------- |
-| `id`             | string          | Sí        | ObjectId serializado (PK)                      |
-| `fecha_hora_ini` | Date            | Sí        | Default: now                                   |
-| `fecha_hora_fin` | Date            | Sí        | -                                              |
-| `cupo_disp`      | number          | Sí        | Cupos disponibles (se decrementa con reservas) |
-| `entrenador`     | Rel<Entrenador> | Sí        | FK → Entrenador                                |
-| `actividad`      | Rel<Actividad>  | Sí        | FK → Actividad                                 |
-
-#### Relaciones
-
-- `entrenador` (N:1) → Entrenador
-- `actividad` (N:1) → Actividad
-- `reservas` (1:N) → Reserva
-
-#### Validaciones
-
-- El entrenador debe estar relacionado con la actividad (M:M en Actividad.entrenadores)
-
----
-
-### 6. **Entrenador**
-
-#### Campos
-
-| Campo      | Tipo   | Requerido | Notas                                                        |
-| ---------- | ------ | --------- | ------------------------------------------------------------ |
-| `id`       | string | Sí        | ObjectId serializado (PK)                                    |
-| `nombre`   | string | Sí        | -                                                            |
-| `apellido` | string | Sí        | -                                                            |
-| `tel`      | number | Sí        | Solo dígitos                                                 |
-| `mail`     | string | Sí        | -                                                            |
-| `frase`    | string | No        | Descripción/lema                                             |
-| `fotoUrl`  | string | No        | URL relativa ej: `/public/uploads/entrenador/{id}/image.jpg` |
-
-#### Relaciones
-
-- `actividades` (M:M) → Actividad
-- `clases` (1:N) → Clase
-
----
-
-### 7. **Membresia**
-
-#### Campos
-
-| Campo         | Tipo   | Requerido | Notas                                                 |
-| ------------- | ------ | --------- | ----------------------------------------------------- |
-| `id`          | string | Sí        | ObjectId serializado (PK)                             |
-| `nombre`      | string | Sí        | Ej: "Plan Básico", "Plan Premium"                     |
-| `descripcion` | string | Sí        | -                                                     |
-| `precio`      | number | Sí        | Valor en moneda (se guarda sin decimales)             |
-| `meses`       | number | Sí        | Duración del contrato (usado para calcular fecha_fin) |
-
-#### Relaciones
-
-- `contratos` (1:N) → Contrato
-
----
-
-### 8. **Valoracion**
-
-#### Campos
-
-| Campo        | Tipo            | Requerido | Notas                     |
-| ------------ | --------------- | --------- | ------------------------- |
-| `id`         | string          | Sí        | ObjectId serializado (PK) |
-| `rating`     | number          | Sí        | 1-5 (validación estricta) |
-| `comentario` | string          | No        | -                         |
-| `usuario`    | Rel<Usuario>    | Sí        | FK → Usuario              |
-| `entrenador` | Rel<Entrenador> | Sí        | FK → Entrenador           |
-
-#### Relaciones
-
-- `usuario` (N:1) → Usuario
-- `entrenador` (N:1) → Entrenador
-
-#### Validaciones
-
-- **Unique constraint**: (usuario, entrenador) - un usuario no puede calificar 2 veces al mismo entrenador
-- **Rating**: Solo 1, 2, 3, 4 o 5
-- **Operación**: Upsert (crear o actualizar)
 
 ---
 
@@ -1481,83 +1248,6 @@ enum EstadoReserva {
 
 ---
 
-## Códigos de Error Personalizados
-
-| Código                      | Mensaje                               | Contexto                        |
-| --------------------------- | ------------------------------------- | ------------------------------- |
-| `LIMITE_CONTRATOS_EXCEDIDO` | No puedes contratar más membresías    | Máximo 2 PENDIENTE              |
-| `CONTRATO_VIGENTE_EXISTE`   | Ya tienes un contrato activo          | Renovación detectada            |
-| `NO_CUPO_DISPONIBLE`        | No hay cupo disponible                | Reserva sin cupo                |
-| `RESERVA_PLAZO_CORTO`       | Reservas se cierran 30 min antes      | Tiempo insuficiente             |
-| `SIN_CONTRATO_VIGENTE`      | No tienes contrato pagado             | Usuario intenta reservar        |
-| `ENTRENADOR_NO_HABILITADO`  | Entrenador no está habilitado         | Relación entrenador-actividad   |
-| `RESERVA_NO_CANCELABLE`     | No se puede cancelar dentro de 30 min | Cancelación tardía              |
-| `PERMISO_DENEGADO`          | No tienes permiso                     | Usuario intenta modificar ajena |
-| `CREDENCIALES_INVALIDAS`    | Email o contraseña incorrectos        | Login fallido                   |
-| `CODIGO_EXPIRADO`           | Código de recuperación expirado       | > 15 minutos                    |
-| `DEMASIADOS_INTENTOS`       | Máximo 3 intentos alcanzado           | Validación de código            |
-
----
-
-## Validaciones y Reglas de Negocio
-
-### Contrato
-
-1. **Renovación automática**: Si existe PAGADO/PENDIENTE vigente, nuevo inicia cuando termina el anterior
-2. **Límite de PENDIENTE**: Máximo 2 por usuario
-3. **Vencimiento automático**: PAGADO → VENCIDO cuando fecha_fin < now
-4. **Duración**: Se calcula como `fecha_ini + (membresia.meses * 30 días)`
-
-### Reserva
-
-1. **Prerequisito de contrato**: Usuario debe tener Contrato PAGADO vigente
-2. **Cupo**: Disponible solo si `clase.cupo_disp > 0`
-3. **Plazo**: No permitir dentro de 30 minutos antes de inicio
-4. **Automatización**: PENDIENTE → CERRADA 30 min antes del inicio
-5. **Cancelación**: Solo si no es dentro de 30 min antes
-6. **Cupo al cancelar**: Se libera automáticamente
-
-### Clase
-
-1. **Validación entrenador-actividad**: El entrenador debe estar en `actividad.entrenadores`
-2. **Cupo**: Se decrementa con cada reserva
-
-### Valoración
-
-1. **Upsert**: Si existe (usuario, entrenador), actualiza; si no, crea
-2. **Rating**: Solo 1-5
-
-### Usuario
-
-1. **Email único**
-2. **Contraseña**: Min 6 caracteres, hasheada con Bcrypt
-3. **Recuperación**: Código expira en 15 min, máximo 3 intentos
-
----
-
-## Información Adicional
-
-### Endpoints que se ejecutan automáticamente
-
-- `/api/Contratos/verificar-vencimientos`: Se ejecuta al iniciar el servidor (cron job)
-- `/api/Reservas/actualizar`: Se ejecuta al iniciar el servidor (cron job)
-
-### Almacenamiento de archivos
-
-- **Ruta base**: `/public/uploads/`
-- **Estructura**: `/public/uploads/[entidad]/[id]/[archivo]`
-- **Formato**: URL en respuesta es `/uploads/[entidad]/[id]/[archivo]` (sin `/public/`)
-- **Archivos soportados**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.avif`
-
-### Variables de entorno necesarias
-
-- `PORT`: Puerto del servidor (default: 5500)
-- `JWT_SECRET`: Clave para firmar JWT de usuarios
-- `ADMIN_SECRET`: Clave para firmar JWT de admin
-- `FRONTEND_URL`: URL del frontend (CORS)
-- `CORS_ORIGIN`: Orígenes CORS adicionales
-- `DB_URL`: URL de conexión a MongoDB
-
 ### STRIPE
 
 #### 1. **GET /api/stripe/metodos-pago** (Obtener métodos de pago disponibles)
@@ -1794,7 +1484,30 @@ enum EstadoReserva {
 
 ---
 
-## Archivos Públicos
+## Información Adicional
+
+### Endpoints que se ejecutan automáticamente
+
+- `/api/Contratos/verificar-vencimientos`: Se ejecuta al iniciar el servidor (cron job)
+- `/api/Reservas/actualizar`: Se ejecuta al iniciar el servidor (cron job)
+
+### Almacenamiento de archivos
+
+- **Ruta base**: `/public/uploads/`
+- **Estructura**: `/public/uploads/[entidad]/[id]/[archivo]`
+- **Formato**: URL en respuesta es `/uploads/[entidad]/[id]/[archivo]` (sin `/public/`)
+- **Archivos soportados**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.avif`
+
+### Variables de entorno necesarias
+
+- `PORT`: Puerto del servidor (default: 5500)
+- `JWT_SECRET`: Clave para firmar JWT de usuarios
+- `ADMIN_SECRET`: Clave para firmar JWT de admin
+- `FRONTEND_URL`: URL del frontend (CORS)
+- `CORS_ORIGIN`: Orígenes CORS adicionales
+- `DB_URL`: URL de conexión a MongoDB
+
+### Archivos Públicos
 
 Las imágenes subidas se sirven desde `/public`, por ejemplo:
 
