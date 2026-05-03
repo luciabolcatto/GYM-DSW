@@ -1,4 +1,4 @@
-# 🧪 Evidencia de Testing Automatizado - GYM DSW
+# 🧪 Evidencia de Testing Automatizado 
 
 
 A continuación, se detalla la cobertura de los tests ejecutados junto con la evidencia (capturas y videos) de su exitosa ejecución.
@@ -11,7 +11,7 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 - **Comando:** `pnpm test:e2e`
 - **Descripción:** Simula paso a paso el recorrido de un usuario real: registro, contratación de membresía, pago y reserva de una clase.
 - **Evidencia:**
-- [🎥 Ver video de la ejecución (e2e.mp4)](https://drive.google.com/file/d/1O8z5gDsAlhOgbUnK566v0C0cJBC6rYV0/view?usp=sharing)
+- ![🎥 Ver video de la ejecución (e2e.mp4)](https://drive.google.com/file/d/1O8z5gDsAlhOgbUnK566v0C0cJBC6rYV0/view?usp=sharing)
 
 ### Modal de Pagos
 - **Comando:** `pnpm test:pago`
