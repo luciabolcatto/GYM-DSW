@@ -11,7 +11,7 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 - **Comando:** `pnpm test:e2e`
 - **Descripción:** Simula paso a paso el recorrido de un usuario real: registro, contratación de membresía, pago y reserva de una clase.
 - **Evidencia:**
-- ![🎥 Ver video de la ejecución (e2e.mp4)](https://drive.google.com/file/d/1O8z5gDsAlhOgbUnK566v0C0cJBC6rYV0/view?usp=sharing)
+- [🎥 Ver video de la ejecución (e2e.mp4)](https://drive.google.com/file/d/1O8z5gDsAlhOgbUnK566v0C0cJBC6rYV0/view?usp=sharing)
 
 ### Modal de Pagos
 - **Comando:** `pnpm test:pago`
@@ -23,7 +23,8 @@ A continuación, se detalla la cobertura de los tests ejecutados junto con la ev
 - **Comando:** `pnpm test:star`
 - **Descripción:** Ejecuta tests unitarios sobre el componente de valoraciones y el renderizado de estrellas según el puntaje.
 - **Evidencia:**
-  ![Test Valoraciones](../images/star.png)
+-
+- ![Test Valoraciones](../images/star.png)
 
 ---
 
@@ -48,24 +49,28 @@ Estos tests levantan la base de datos de prueba y ejecutan el ciclo de vida comp
 - **Autenticación y Seguridad**
   - **Comando:** `pnpm test:auth`
   - **Descripción:** Pruebas de generación de tokens JWT, encriptación de contraseñas y middleware de seguridad.
-  - **Evidencia:** 
-    ![Test Auth](../images/auth.png)
+  - **Evidencia:**
+  -
+  - ![Test Auth](../images/auth.png)
 
 - ** Reservas **
   - **Comando:** `pnpm test:reserva`
   - **Descripción:** Verifica las reglas de negocio para crear y modificar reservas.
-  - **Evidencia:** 
-    ![Test Reservas](../images/reserva.png)
+  - **Evidencia:**
+  -
+  - ![Test Reservas](../images/reserva.png)
 
 - **Contratos**
   - **Comando:** `pnpm test:contrato`
   - **Descripción:** Comprueba la lógica de contratacion.
-  - **Evidencia:** 
-    ![Test Contratos](../images/contrato.png)
+  - **Evidencia:**
+  -
+  - ![Test Contratos](../images/contrato.png)
 
 - **Controlador de Usuarios**
   - **Comando:** `pnpm test:usuario`
   - **Descripción:** Evalúa la sanitización de datos ingresados, el flujo de inicio de sesión (login) y la correcta gestión de las cuentas.
-  - **Evidencia:** 
-    ![Test Usuarios](../images/usuario.png)
+  - **Evidencia:**
+  -
+  - ![Test Usuarios](../images/usuario.png)
 
