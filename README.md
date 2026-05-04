@@ -39,7 +39,7 @@ bash <br>
 
 4. **Ejecutar en modo desarrollo:** <br>
 bash <br>
-   pnpm run dev  <br>
+   pnpm run start:dev  <br>
 
 ### Credenciales de Prueba
 Para testear el flujo de pagos (Stripe Test Mode):
