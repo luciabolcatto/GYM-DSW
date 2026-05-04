@@ -113,7 +113,6 @@ Content-Type: application/json
 
 **Estados de dominio**: ver [Casos de Uso](./casos-uso.md) para el detalle de ciclos y transiciones de estado (contratos, reservas y reglas asociadas).
 
-
 ---
 
 ## Endpoints por Entidad
@@ -291,7 +290,7 @@ Content-Type: application/json
 
 #### 6. **GET /api/Usuarios** (Listar todos)
 
-**Autenticación**: ✅ Requerida (Bearer token)
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -317,7 +316,7 @@ Content-Type: application/json
 
 #### 7. **GET /api/Usuarios/:id** (Obtener por ID)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -338,7 +337,7 @@ Content-Type: application/json
 
 #### 8. **PUT /api/Usuarios/:id** (Actualizar - Reemplazo)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
@@ -364,7 +363,7 @@ Content-Type: application/json
 
 #### 9. **PATCH /api/Usuarios/:id** (Actualizar - Parcial)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**: Mismo que PUT, pero solo envía campos a actualizar
 
@@ -374,7 +373,7 @@ Content-Type: application/json
 
 #### 10. **DELETE /api/Usuarios/:id** (Eliminar)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -390,7 +389,7 @@ Content-Type: application/json
 
 #### 1. **POST /api/Contratos/contratar** (Contratar membresía)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
@@ -439,7 +438,7 @@ Content-Type: application/json
 
 #### 2. **PATCH /api/Contratos/cancelar/:contratoId** (Cancelar contrato)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -469,7 +468,7 @@ Content-Type: application/json
 
 #### 3. **POST /api/Contratos/verificar-vencimientos** (Verificar vencimientos)
 
-**Autenticación**: No requerida (pero se recomienda admin)
+**Autenticación**: No requerida
 
 **Response** (200):
 
@@ -489,7 +488,7 @@ Content-Type: application/json
 
 #### 4. **GET /api/Contratos/usuario/:usuarioId** (Obtener contratos del usuario)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -533,7 +532,7 @@ Content-Type: application/json
 
 #### 5. **GET /api/Contratos/admin/estadisticas** (Estadísticas globales)
 
-**Autenticación**: No requerida (se ejecuta auto)
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200):
 
@@ -556,7 +555,7 @@ Content-Type: application/json
 
 #### 6. **GET /api/Contratos/filtrado** (Usuarios sin contrato - Admin)
 
-**Autenticación**: ✅ Admin token requerido
+**Autenticación**: ✅ Requerida (Admin)
 
 **Query**: `?estado=sin-contrato`
 
@@ -579,7 +578,7 @@ Content-Type: application/json
 
 #### 7. **GET /api/Contratos** (Listar todos)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Array de contratos con usuario y membresia populados
 
@@ -587,7 +586,7 @@ Content-Type: application/json
 
 #### 8. **GET /api/Contratos/:id** (Obtener por ID)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200):
 
@@ -623,7 +622,7 @@ Content-Type: application/json
 
 #### 9. **POST /api/Contratos** (Crear manual)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**:
 
@@ -652,7 +651,7 @@ Content-Type: application/json
 
 #### 1. **POST /api/Reservas** (Crear reserva)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
@@ -697,7 +696,7 @@ Content-Type: application/json
 
 #### 2. **PUT/PATCH /api/Reservas/:id** (Actualizar reserva)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario )
 
 **Body**:
 
@@ -729,7 +728,7 @@ Content-Type: application/json
 
 #### 3. **GET /api/Reservas** (Listar reservas - Del usuario autenticado)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Query** (opcional): `?usuario=507f1f77bcf86cd799439011`
 
@@ -739,7 +738,7 @@ Content-Type: application/json
 
 #### 4. **GET /api/Reservas/:id** (Obtener por ID)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -770,7 +769,7 @@ Content-Type: application/json
 
 #### 5. **DELETE /api/Reservas/:id** (Eliminar reserva)
 
-**Autenticación**: ✅ Requerida
+**Autenticación**: ✅ Requerida (Usuario )
 
 **Response** (200): Reserva eliminada
 
@@ -778,7 +777,7 @@ Content-Type: application/json
 
 #### 6. **GET /api/Reservas/filtrado** (Reservas por clase - Admin)
 
-**Autenticación**: ✅ Admin token requerido
+**Autenticación**: ✅ Requerida (Admin)
 
 **Query**: `?claseId=507f1f77bcf86cd799439014`
 
@@ -902,7 +901,7 @@ Content-Type: application/json
 
 #### 3. **POST /api/actividad** (Crear actividad)
 
-**Autenticación**: No requerida (pero se recomienda admin)
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**:
 
@@ -926,7 +925,7 @@ Content-Type: application/json
 
 #### 4. **PUT/PATCH /api/actividad/:id** (Actualizar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**: Campos a actualizar
 
@@ -936,7 +935,7 @@ Content-Type: application/json
 
 #### 5. **DELETE /api/actividad/:id** (Eliminar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Actividad eliminada
 
@@ -944,7 +943,7 @@ Content-Type: application/json
 
 #### 6. **POST /api/actividad/:id/imagen** (Subir imagen)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Content-Type**: `multipart/form-data`
 
@@ -1011,7 +1010,7 @@ Content-Type: application/json
 
 ---
 
-#### 3. **GET /api/clases/con-reservas-usuario** (Clases con flag de reserva del usuario)
+#### 3. **GET /api/clases/con-reservas-usuario** (Clases con reserva del usuario)
 
 **Autenticación**: No requerida
 
@@ -1027,7 +1026,7 @@ Content-Type: application/json
 
 #### 4. **POST /api/clases** (Crear clase)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**:
 
@@ -1055,7 +1054,7 @@ Content-Type: application/json
 
 #### 5. **PUT/PATCH /api/clases/:id** (Actualizar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**: Campos a actualizar
 
@@ -1067,7 +1066,7 @@ Content-Type: application/json
 
 #### 6. **PATCH /api/clases/:id/actualizar-cupo** (Decrementar cupo)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -1088,7 +1087,7 @@ Content-Type: application/json
 
 #### 7. **DELETE /api/clases/:id** (Eliminar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Clase eliminada
 
@@ -1165,7 +1164,7 @@ Content-Type: application/json
 
 #### 3. **POST /api/entrenadores** (Crear entrenador)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**:
 
@@ -1186,7 +1185,7 @@ Content-Type: application/json
 
 #### 4. **PUT/PATCH /api/entrenadores/:id** (Actualizar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Entrenador actualizado
 
@@ -1194,7 +1193,7 @@ Content-Type: application/json
 
 #### 5. **DELETE /api/entrenadores/:id** (Eliminar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Entrenador eliminado
 
@@ -1251,7 +1250,7 @@ Content-Type: application/json
 
 #### 3. **POST /api/membresias** (Crear membresía)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Body**:
 
@@ -1270,7 +1269,7 @@ Content-Type: application/json
 
 #### 4. **PUT/PATCH /api/membresias/:id** (Actualizar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Membresía actualizada
 
@@ -1278,7 +1277,7 @@ Content-Type: application/json
 
 #### 5. **DELETE /api/membresias/:id** (Eliminar)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Admin)
 
 **Response** (200): Membresía eliminada
 
@@ -1339,7 +1338,7 @@ Content-Type: application/json
 
 #### 3. **POST /api/valoraciones** (Crear o actualizar valoración)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
@@ -1454,7 +1453,7 @@ Content-Type: application/json
 
 #### 2. **POST /api/stripe/create-checkout-session** (Crear sesión de pago)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
@@ -1492,7 +1491,7 @@ Content-Type: application/json
 
 #### 3. **GET /api/stripe/session/:sessionId** (Consultar estado de sesión)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -1518,7 +1517,7 @@ Content-Type: application/json
 
 #### 4. **POST /api/stripe/pagar-transferencia** (Registrar pago por transferencia)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
@@ -1564,7 +1563,7 @@ Content-Type: application/json
 
 #### 5. **POST /api/stripe/pagar-efectivo** (Registrar pago en efectivo)
 
-**Autenticación**: No requerida
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Body**:
 
