@@ -41,7 +41,18 @@
 #### 1. **Autenticación de Usuarios (JWT Standard)**
 
 - **Header requerido**: `Authorization: Bearer <token>`
-- **Rutas protegidas**: GET/PUT/PATCH/DELETE de Usuario, Reservas, Contratos del usuario
+- **Rutas protegidas**:
+  - GET `/api/Usuarios`
+  - GET `/api/Usuarios/:id`
+  - PUT `/api/Usuarios/:id`
+  - DELETE `/api/Usuarios/:id`
+  - GET `/api/Reservas`
+  - GET `/api/Reservas/:id`
+  - POST `/api/Reservas`
+  - PUT `/api/Reservas/:id`
+  - DELETE `/api/Reservas/:id`
+  - GET `/api/Contratos/:id`
+  - GET `/api/Contratos/usuario/:usuarioId`
 - **Generado en**: POST `/api/Usuarios/login`
 
 #### 2. **Autenticación de Administrador (Admin Token)**
@@ -55,12 +66,38 @@
 
 #### 3. **Rutas Públicas**
 
-- Todas las consultas GET de recursos
+- GET públicos de recursos no autenticados: `/api/actividad`, `/api/entrenadores`, `/api/membresias`, `/api/clases`, `/api/valoraciones`, `/api/Contratos`
 - POST `/api/Usuarios` (registro)
 - POST `/api/Usuarios/login`
 - POST `/api/Usuarios/solicitar-codigo`
 - POST `/api/Usuarios/validar-codigo`
 - POST `/api/Usuarios/restablecer-contrasena`
+- POST `/api/admin/login`
+- Rutas públicas de Stripe: `/api/stripe/*`
+- POST `/api/Reservas/actualizar` (tarea interna/scheduler)
+
+### Ejemplos de Headers
+
+#### 1. **JWT de Usuario**
+
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+```
+
+#### 2. **JWT de Administrador**
+
+```http
+Authorization: Bearer <admin_token>
+Content-Type: application/json
+```
+
+#### 3. **Webhook de Stripe**
+
+```http
+Stripe-Signature: t=1714737600,v1=...
+Content-Type: application/json
+```
 
 ### Códigos de Respuesta HTTP
 
@@ -73,6 +110,9 @@
 | `403`  | Forbidden - Permiso insuficiente         | Usuario intenta modificar reserva ajena |
 | `404`  | Not Found - Recurso no existe            | GET con ID inexistente                  |
 | `500`  | Server Error - Error inesperado          | Excepción en servidor                   |
+
+**Estados de dominio**: ver [Casos de Uso](./casos-uso.md) para el detalle de ciclos y transiciones de estado (contratos, reservas y reglas asociadas).
+
 
 ---
 
@@ -105,7 +145,7 @@
 - `contrasena`: min 6 caracteres
 - `tel`: solo dígitos
 
-**Response** (201):
+**Response** (200):
 
 ```json
 {
@@ -361,7 +401,7 @@
 }
 ```
 
-**Response** (201):
+**Response** (200):
 
 ```json
 {
@@ -549,7 +589,35 @@
 
 **Autenticación**: ✅ Requerida
 
-**Response** (200): Contrato individual
+**Response** (200):
+
+```json
+{
+  "message": "contrato encontrado",
+  "data": {
+    "id": "507f1f77bcf86cd799439013",
+    "fecha_hora_ini": "2025-05-03T10:00:00.000Z",
+    "fecha_hora_fin": "2025-07-03T10:00:00.000Z",
+    "estado": "pagado",
+    "fechaPago": "2025-05-03T12:30:00.000Z",
+    "fechaCancelacion": null,
+    "metodoPago": "stripe",
+    "usuario": {
+      "id": "507f1f77bcf86cd799439011",
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "mail": "juan@example.com"
+    },
+    "membresia": {
+      "id": "507f1f77bcf86cd799439012",
+      "nombre": "Plan Anual",
+      "descripcion": "Acceso completo a todas las clases",
+      "precio": 49990,
+      "meses": 12
+    }
+  }
+}
+```
 
 ---
 
@@ -595,7 +663,7 @@
 }
 ```
 
-**Response** (201):
+**Response** (200):
 
 ```json
 {
@@ -673,7 +741,30 @@
 
 **Autenticación**: ✅ Requerida
 
-**Response** (200): Reserva individual
+**Response** (200):
+
+```json
+{
+  "message": "reserva encontrada",
+  "data": {
+    "id": "507f1f77bcf86cd799439014",
+    "fecha_hora": "2025-05-10T15:00:00.000Z",
+    "estado": "pendiente",
+    "usuario": {
+      "id": "507f1f77bcf86cd799439011",
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "mail": "juan@example.com"
+    },
+    "clase": {
+      "id": "507f1f77bcf86cd799439015",
+      "nombre": "Yoga Matutino",
+      "fecha_hora_ini": "2025-05-10T09:00:00.000Z",
+      "fecha_hora_fin": "2025-05-10T10:00:00.000Z"
+    }
+  }
+}
+```
 
 ---
 
@@ -778,7 +869,34 @@
 
 **Autenticación**: No requerida
 
-**Response** (200): Actividad individual
+**Response** (200):
+
+```json
+{
+  "message": "found actividad",
+  "data": {
+    "id": "507f1f77bcf86cd799439016",
+    "nombre": "Yoga",
+    "descripcion": "Clase de yoga relajante para todos los niveles",
+    "cupo": 20,
+    "imagenUrl": "/public/uploads/actividad/507f1f77bcf86cd799439016/imagen.jpg",
+    "entrenadores": [
+      {
+        "id": "507f1f77bcf86cd799439017",
+        "nombre": "Carlos",
+        "apellido": "García"
+      }
+    ],
+    "clases": [
+      {
+        "id": "507f1f77bcf86cd799439018",
+        "fecha_hora_ini": "2025-05-10T09:00:00.000Z",
+        "fecha_hora_fin": "2025-05-10T10:00:00.000Z"
+      }
+    ]
+  }
+}
+```
 
 ---
 
@@ -1013,7 +1131,35 @@
 
 **Autenticación**: No requerida
 
-**Response** (200): Entrenador individual
+**Response** (200):
+
+```json
+{
+  "message": "entrenador encontrado",
+  "data": {
+    "id": "507f1f77bcf86cd799439017",
+    "nombre": "Carlos",
+    "apellido": "García",
+    "tel": 1234567890,
+    "mail": "carlos@example.com",
+    "frase": "¡Vamos a entrenar!",
+    "fotoUrl": "/public/uploads/entrenador/507f1f77bcf86cd799439017/foto.jpg",
+    "actividades": [
+      {
+        "id": "507f1f77bcf86cd799439016",
+        "nombre": "Yoga"
+      }
+    ],
+    "clases": [
+      {
+        "id": "507f1f77bcf86cd799439018",
+        "fecha_hora_ini": "2025-05-10T09:00:00.000Z",
+        "fecha_hora_fin": "2025-05-10T10:00:00.000Z"
+      }
+    ]
+  }
+}
+```
 
 ---
 
@@ -1086,7 +1232,20 @@
 
 **Autenticación**: No requerida
 
-**Response** (200): Membresía individual
+**Response** (200):
+
+```json
+{
+  "message": "Membresía encontrada",
+  "data": {
+    "id": "507f1f77bcf86cd799439012",
+    "nombre": "Plan Anual",
+    "descripcion": "Acceso completo a todas las clases por 12 meses",
+    "precio": 49990,
+    "meses": 12
+  }
+}
+```
 
 ---
 
@@ -1228,8 +1387,7 @@
 
 ```json
 {
-  "usuario": "admin",
-  "contrasena": "adminPassword123"
+  "password": "adminPassword123"
 }
 ```
 
@@ -1258,25 +1416,35 @@
 
 ```json
 {
-  "message": "Métodos de pago obtenidos",
+  "message": "Métodos de pago disponibles",
   "data": [
     {
       "id": "stripe",
-      "nombre": "Tarjeta de crédito/débito",
-      "descripcion": "Pago mediante Stripe",
-      "activo": true
+      "nombre": "Tarjeta de Crédito/Débito",
+      "descripcion": "Pago seguro con tarjeta a través de Stripe",
+      "icono": "credit-card",
+      "requiereRedireccion": true
     },
     {
-      "id": "transferencia",
-      "nombre": "Transferencia bancaria",
-      "descripcion": "Pago simulado",
-      "activo": true
+      "id": "transferencia_bancaria",
+      "nombre": "Transferencia Bancaria",
+      "descripcion": "Transferencia a cuenta bancaria del gimnasio",
+      "icono": "bank",
+      "requiereRedireccion": false,
+      "datosBancarios": {
+        "banco": "Banco Ejemplo",
+        "titular": "Gimnasio AppGym S.A.",
+        "cbu": "0000000000000000000000",
+        "alias": "GIMNASIO.APPGYM"
+      }
     },
     {
       "id": "efectivo",
       "nombre": "Efectivo",
-      "descripcion": "Pago simulado en efectivo",
-      "activo": true
+      "descripcion": "Pago en efectivo en recepción del gimnasio",
+      "icono": "cash",
+      "requiereRedireccion": false,
+      "instrucciones": "Acércate a la recepción del gimnasio con tu número de contrato para realizar el pago."
     }
   ]
 }
@@ -1292,24 +1460,21 @@
 
 ```json
 {
-  "contratoId": "507f1f77bcf86cd799439013",
-  "metodoPago": "stripe"
+  "contratoId": "507f1f77bcf86cd799439013"
 }
 ```
 
-**Response** (201):
+**Response** (200):
 
 ```json
 {
-  "message": "Sesión de pago creada",
-  "data": {
-    "sessionId": "cs_live_...",
-    "clientSecret": "cs_live_...",
-    "url": "https://checkout.stripe.com/pay/cs_live_...",
-    "contratoId": "507f1f77bcf86cd799439013"
-  }
+  "message": "Sesión de pago creada exitosamente",
+  "checkoutUrl": "https://checkout.stripe.com/pay/cs_live_...",
+  "sessionId": "cs_live_..."
 }
 ```
+
+**Nota**: si ya existe una sesión activa, el backend responde `200` con `message: "Ya existe una sesión de pago activa"` y `checkoutUrl`.
 
 **Validaciones**:
 
@@ -1333,18 +1498,13 @@
 
 ```json
 {
-  "message": "Estado de sesión obtenido",
-  "data": {
-    "sessionId": "cs_live_...",
-    "status": "complete" | "open" | "expired",
-    "paymentStatus": "paid" | "unpaid" | "no_payment_required",
-    "customer": {
-      "email": "juan@example.com",
-      "name": "Juan Pérez"
-    },
-    "amount": 4999,
-    "currency": "ARS",
-    "contratoId": "507f1f77bcf86cd799439013"
+  "sessionId": "cs_live_...",
+  "status": "complete",
+  "paymentStatus": "paid",
+  "contrato": {
+    "id": "507f1f77bcf86cd799439013",
+    "estado": "pagado",
+    "membresia": "Plan Anual"
   }
 }
 ```
@@ -1365,23 +1525,27 @@
 ```json
 {
   "contratoId": "507f1f77bcf86cd799439013",
-  "numeroComprobante": "TRX123456789",
-  "banco": "Banco Nación"
+  "comprobanteNumero": "TRX123456789"
 }
 ```
+
+**Nota**: el backend registra el comprobante y no usa datos bancarios adicionales.
 
 **Response** (200):
 
 ```json
 {
-  "message": "Pago registrado exitosamente",
+  "message": "Pago con transferencia procesado exitosamente",
   "data": {
     "contrato": {
       "id": "507f1f77bcf86cd799439013",
       "estado": "pagado",
-      "fechaPago": "2025-05-03T10:00:00Z",
+      "fechaPago": "2025-05-03T10:00:00.000Z",
       "metodoPago": "transferencia"
-    }
+    },
+    "membresia": "Plan Anual",
+    "monto": 49990,
+    "comprobante": "TRX123456789"
   }
 }
 ```
@@ -1406,23 +1570,27 @@
 
 ```json
 {
-  "contratoId": "507f1f77bcf86cd799439013",
-  "monto": 4999
+  "contratoId": "507f1f77bcf86cd799439013"
 }
 ```
+
+**Nota**: el backend calcula el monto desde la membresía asociada al contrato.
 
 **Response** (200):
 
 ```json
 {
-  "message": "Pago en efectivo registrado",
+  "message": "Pago en efectivo registrado exitosamente",
   "data": {
     "contrato": {
       "id": "507f1f77bcf86cd799439013",
       "estado": "pagado",
-      "fechaPago": "2025-05-03T10:00:00Z",
+      "fechaPago": "2025-05-03T10:00:00.000Z",
       "metodoPago": "efectivo"
-    }
+    },
+    "membresia": "Plan Anual",
+    "monto": 49990,
+    "reciboNumero": "EF-1714737600000"
   }
 }
 ```
@@ -1430,7 +1598,7 @@
 **Validaciones**:
 
 - Contrato debe existir y estar PENDIENTE
-- Monto debe coinciditar con membresía (si aplica validación)
+- Monto debe coincidir con membresía (si aplica validación)
 
 **Errores**:
 
@@ -1497,4 +1665,3 @@
 - **Estructura**: `/public/uploads/[entidad]/[id]/[archivo]`
 - **Formato**: URL en respuesta es `/uploads/[entidad]/[id]/[archivo]` (sin `/public/`)
 - **Archivos soportados**: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.avif`
-
