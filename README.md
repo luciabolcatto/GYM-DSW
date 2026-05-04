@@ -13,7 +13,7 @@ Sistema full stack para la gestión integral de gimnasios, desarrollado como pro
 ### Tecnologías Principales
 - **Backend:** Node.js, TypeScript, MikroORM (MongoDB).
 - **Pagos:** Stripe API (Checkout & Webhooks).
-- **Mailing:** Nodemailer (Gmail).
+- **Mailing:**  Brevo.
 - **Frontend:** React + Vite + Tailwind CSS.
 
 ### Documentación del Proyecto
