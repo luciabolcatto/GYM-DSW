@@ -14,7 +14,7 @@ Las pruebas se enfocaron en la renderización de componentes complejos, simulaci
 - **Descripción:** Simula paso a paso el recorrido de un usuario real: registro, contratación de membresía, pago y reserva de una clase.
 - **Evidencia:**
 - [🎥 Ver video de la ejecución](https://drive.google.com/file/d/1O8z5gDsAlhOgbUnK566v0C0cJBC6rYV0/view?usp=sharing)
-- [🎥 Ver video de la ejecución](https://drive.google.com/file/d/1O8z5gDsAlhOgbUnK566v0C0cJBC6rYV0/view?usp=sharing)
+
 
 Nota: aparecen warnings de React Router sobre "future flags" durante los tests; son avisos de compatibilidad futura (no fallos) y no afectan el resultado del E2E.
 
@@ -25,7 +25,7 @@ Nota: aparecen warnings de React Router sobre "future flags" durante los tests; 
 - **Evidencia:**
 - [🎥 Ver video de la ejecución](https://drive.google.com/file/d/1UupWRs6W9wBYzas7vt8R-DWqvI1AoAlK/view?usp=sharing)
 
-- [🎥 Ver video de la ejecución](https://drive.google.com/file/d/1UupWRs6W9wBYzas7vt8R-DWqvI1AoAlK/view?usp=sharing)
+
 
 Nota: el test de `PagoModal` muestra logs de errores y warnings de `jsdom`/`act(...)` — son mensajes esperados en pruebas que simulan errores, redirecciones y llamadas a la API; la suite pasa correctamente y no indica fallos en lógica de producción.
 
