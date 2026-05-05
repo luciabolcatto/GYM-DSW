@@ -6,6 +6,9 @@ Sistema full stack para la gestión integral de gimnasios, desarrollado como pro
 - [Frontend](https://frontend-app-gym.vercel.app/)
 - [Backend API](https://backendappgym.onrender.com) 
 
+### Video de Demo
+- https://youtu.be/hOL5M28KWYU
+
 ### Repositorios
 - [frontend app](https://github.com/luciabolcatto/frontendAppGym.git)
 - [backend app](https://github.com/luciabolcatto/backendAppGym.git)
