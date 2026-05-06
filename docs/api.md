@@ -28,8 +28,8 @@
 ### Convenciones Generales
 
 - Todas las entidades usan IDs en formato `ObjectId` (MongoDB) serializado a `string`
-- Las respuestas incluyen `message` (descripción) y `data` (payload)
-- No hay paginación implementada (retorna todos los registros)
+- Las respuestas suelen incluir `message` (descripción) y `data` (payload).
+- Nota: algunos endpoints devuelven únicamente `message` (sin `data`). Revisa la sección de endpoints para excepciones específicas.
 - Saneamiento de entrada en todos los endpoints
 
 ---
@@ -88,7 +88,7 @@ Content-Type: application/json
 #### 2. **JWT de Administrador**
 
 ```http
-Authorization: Bearer <admin_token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 ```
 
@@ -144,7 +144,7 @@ Content-Type: application/json
 - `contrasena`: min 6 caracteres
 - `tel`: solo dígitos
 
-**Response** (200):
+**Response** (201):
 
 ```json
 {
@@ -155,7 +155,11 @@ Content-Type: application/json
     "apellido": "Pérez",
     "tel": 1234567890,
     "mail": "juan@example.com",
-    "fotoPerfil": "/uploads/usuario/507f1f77bcf86cd799439011/image.jpg"
+    "contrasena": "$2b$10$hash...",
+    "fotoPerfil": "/uploads/usuario/507f1f77bcf86cd799439011/image.jpg",
+    "resetCode": null,
+    "resetCodeExpiry": null,
+    "resetAttempts": 0
   }
 }
 ```
@@ -304,7 +308,11 @@ Content-Type: application/json
       "apellido": "Pérez",
       "tel": 1234567890,
       "mail": "juan@example.com",
+      "contrasena": "$2b$10$hash...",
       "fotoPerfil": "/uploads/usuario/507f1f77bcf86cd799439011/image.jpg",
+      "resetCode": null,
+      "resetCodeExpiry": null,
+      "resetAttempts": 0,
       "contratos": [],
       "reservas": []
     }
@@ -324,7 +332,18 @@ Content-Type: application/json
 {
   "message": "Usuario encontrado",
   "data": {
-    /* mismo formato que GET /Usuarios */
+    "id": "507f1f77bcf86cd799439011",
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "tel": 1234567890,
+    "mail": "juan@example.com",
+    "contrasena": "$2b$10$hash...",
+    "fotoPerfil": "/uploads/usuario/507f1f77bcf86cd799439011/image.jpg",
+    "resetCode": null,
+    "resetCodeExpiry": null,
+    "resetAttempts": 0,
+    "contratos": [],
+    "reservas": []
   }
 }
 ```
@@ -352,7 +371,25 @@ Content-Type: application/json
 }
 ```
 
-**Response** (200): Usuario actualizado
+**Response** (200):
+
+```json
+{
+  "message": "Usuario actualizado",
+  "data": {
+    "id": "507f1f77bcf86cd799439011",
+    "nombre": "Juan Actualizado",
+    "apellido": "Pérez",
+    "tel": 9999999999,
+    "mail": "juannuevo@example.com",
+    "contrasena": "$2b$10$hash...",
+    "fotoPerfil": "/uploads/usuario/507f1f77bcf86cd799439011/image.jpg",
+    "resetCode": null,
+    "resetCodeExpiry": null,
+    "resetAttempts": 0
+  }
+}
+```
 
 **Notas**:
 
@@ -365,9 +402,27 @@ Content-Type: application/json
 
 **Autenticación**: ✅ Requerida (Usuario)
 
-**Body**: Mismo que PUT, pero solo envía campos a actualizar
+**Body**: Mismo que PUT; la implementación actual valida nombre, apellido, mail y contrasena.
 
-**Response** (200): Usuario actualizado
+**Response** (200):
+
+```json
+{
+  "message": "Usuario actualizado",
+  "data": {
+    "id": "507f1f77bcf86cd799439011",
+    "nombre": "Juan Actualizado",
+    "apellido": "Pérez",
+    "tel": 9999999999,
+    "mail": "juannuevo@example.com",
+    "contrasena": "$2b$10$hash...",
+    "fotoPerfil": "/uploads/usuario/507f1f77bcf86cd799439011/image.jpg",
+    "resetCode": null,
+    "resetCodeExpiry": null,
+    "resetAttempts": 0
+  }
+}
+```
 
 ---
 
@@ -400,7 +455,9 @@ Content-Type: application/json
 }
 ```
 
-**Response** (200):
+**Response** (201):
+
+**Contrato nuevo (sin contratos activos vigentes)**:
 
 ```json
 {
@@ -416,6 +473,30 @@ Content-Type: application/json
     },
     "esRenovacion": false,
     "contratoAnterior": null
+  }
+}
+```
+
+**Contrato de renovación (existe contrato vigente)**:
+
+```json
+{
+  "message": "Nueva membresía programada. Iniciará el 03/07/2025 cuando termine el contrato actual (pagado). Pendiente de pago.",
+  "data": {
+    "contrato": {
+      "id": "507f1f77bcf86cd799439014",
+      "fecha_hora_ini": "2025-07-03T10:00:00Z",
+      "fecha_hora_fin": "2025-09-03T10:00:00Z",
+      "estado": "pendiente",
+      "usuario": "507f1f77bcf86cd799439011",
+      "membresia": "507f1f77bcf86cd799439012"
+    },
+    "esRenovacion": true,
+    "contratoAnterior": {
+      "id": "507f1f77bcf86cd799439013",
+      "estado": "pagado",
+      "fechaFin": "2025-07-03T10:00:00Z"
+    }
   }
 }
 ```
@@ -532,7 +613,7 @@ Content-Type: application/json
 
 #### 5. **GET /api/Contratos/admin/estadisticas** (Estadísticas globales)
 
-**Autenticación**: ✅ Requerida (Admin)
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -555,7 +636,7 @@ Content-Type: application/json
 
 #### 6. **GET /api/Contratos/filtrado** (Usuarios sin contrato - Admin)
 
-**Autenticación**: ✅ Requerida (Admin)
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Query**: `?estado=sin-contrato`
 
@@ -586,7 +667,7 @@ Content-Type: application/json
 
 #### 8. **GET /api/Contratos/:id** (Obtener por ID)
 
-**Autenticación**: ✅ Requerida (Admin)
+**Autenticación**: ✅ Requerida (Usuario)
 
 **Response** (200):
 
@@ -636,14 +717,47 @@ Content-Type: application/json
 }
 ```
 
-**Response** (201): Contrato creado
+**Response** (201):
+
+```json
+{
+  "message": "contrato creado",
+  "data": {
+    /* contrato creado */
+  }
+}
+```
 
 ---
 
-#### 10-12. **PUT, PATCH, DELETE /api/Contratos/:id**
+#### 10. **PUT/PATCH /api/Contratos/:id** (Actualizar)
 
-- **PUT/PATCH**: Actualización de contrato
-- **DELETE**: Eliminación
+**Autenticación**: ✅ Requerida (Admin)
+
+**Response** (200):
+
+```json
+{
+  "message": "contrato actualizado",
+  "data": {
+    /* contrato actualizado */
+  }
+}
+```
+
+---
+
+#### 11. **DELETE /api/Contratos/:id** (Eliminar)
+
+**Autenticación**: ✅ Requerida (Admin)
+
+**Response** (200):
+
+```json
+{
+  "message": "contrato eliminado"
+}
+```
 
 ---
 
@@ -662,7 +776,7 @@ Content-Type: application/json
 }
 ```
 
-**Response** (200):
+**Response** (201):
 
 ```json
 {
@@ -929,7 +1043,13 @@ Content-Type: application/json
 
 **Body**: Campos a actualizar
 
-**Response** (200): Actividad actualizada
+**Response** (200):
+
+```json
+{
+  "message": "actividad updated"
+}
+```
 
 ---
 
@@ -937,7 +1057,13 @@ Content-Type: application/json
 
 **Autenticación**: ✅ Requerida (Admin)
 
-**Response** (200): Actividad eliminada
+**Response** (200):
+
+```json
+{
+  "message": "actividad deleted"
+}
+```
 
 ---
 
@@ -970,7 +1096,14 @@ Content-Type: application/json
 
 **Query** (opcional): `?actividadId=507f1f77bcf86cd799439016`
 
-**Response** (200): Array de clases con entrenador, actividad y reservas populadas
+**Response** (200):
+
+```json
+{
+  "message": "se encontraron las clases",
+  "data": []
+}
+```
 
 ---
 
@@ -988,29 +1121,26 @@ Content-Type: application/json
 ```json
 {
   "message": "Clases obtenidas correctamente",
-  "data": [
-    {
-      "id": "507f1f77bcf86cd799439014",
-      "fecha_hora_ini": "2025-05-03T10:00:00Z",
-      "fecha_hora_fin": "2025-05-03T11:00:00Z",
-      "cupo_disp": 5,
-      "entrenador": {
-        /* detalles del entrenador */
-      },
-      "actividad": {
-        /* detalles de la actividad */
-      },
-      "reservas": [
-        /* reservas de esta clase */
-      ]
-    }
-  ]
+  "data": []
 }
 ```
 
 ---
 
-#### 3. **GET /api/clases/con-reservas-usuario** (Clases con reserva del usuario)
+#### 3. **GET /api/clases/admin/todas-ordenadas** (Listar ordenadas - Admin)
+
+**Autenticación**: ✅ Requerida (Admin)
+
+**Query**:
+
+- `?fecha=2025-05-03` (filtro por fecha YYYY-MM-DD)
+- `?actividadId=507f1f77bcf86cd799439016` (filtro por actividad)
+
+**Response** (200): mismo formato que `GET /api/clases/todas-ordenadas`
+
+---
+
+#### 4. **GET /api/clases/con-reservas-usuario** (Clases con reserva del usuario)
 
 **Autenticación**: No requerida
 
@@ -1024,7 +1154,7 @@ Content-Type: application/json
 
 ---
 
-#### 4. **POST /api/clases** (Crear clase)
+#### 5. **POST /api/clases** (Crear clase)
 
 **Autenticación**: ✅ Requerida (Admin)
 
@@ -1052,19 +1182,28 @@ Content-Type: application/json
 
 ---
 
-#### 5. **PUT/PATCH /api/clases/:id** (Actualizar)
+#### 6. **PUT/PATCH /api/clases/:id** (Actualizar)
 
 **Autenticación**: ✅ Requerida (Admin)
 
 **Body**: Campos a actualizar
 
-**Response** (200): Clase actualizada
+**Response** (200):
+
+```json
+{
+  "message": "clase actualizada",
+  "data": {
+    /* clase actualizada */
+  }
+}
+```
 
 **Validaciones**: Mismas que POST
 
 ---
 
-#### 6. **PATCH /api/clases/:id/actualizar-cupo** (Decrementar cupo)
+#### 7. **PATCH /api/clases/:id/actualizar-cupo** (Decrementar cupo)
 
 **Autenticación**: ✅ Requerida (Usuario)
 
@@ -1085,11 +1224,17 @@ Content-Type: application/json
 
 ---
 
-#### 7. **DELETE /api/clases/:id** (Eliminar)
+#### 8. **DELETE /api/clases/:id** (Eliminar)
 
 **Autenticación**: ✅ Requerida (Admin)
 
-**Response** (200): Clase eliminada
+**Response** (200):
+
+```json
+{
+  "message": "clase eliminada"
+}
+```
 
 ---
 
@@ -1179,7 +1324,23 @@ Content-Type: application/json
 }
 ```
 
-**Response** (201): Entrenador creado
+**Response** (201):
+
+```json
+{
+  "message": "entrenador creado",
+  "data": {
+    "id": "507f1f77bcf86cd799439017",
+    "nombre": "Carlos",
+    "apellido": "García",
+    "tel": 1234567890,
+    "mail": "carlos@example.com",
+    "frase": "¡Vamos a entrenar!",
+    "fotoUrl": "/public/uploads/entrenador/507f1f77bcf86cd799439017/foto.jpg",
+    "actividades": []
+  }
+}
+```
 
 ---
 
@@ -1187,7 +1348,37 @@ Content-Type: application/json
 
 **Autenticación**: ✅ Requerida (Admin)
 
-**Response** (200): Entrenador actualizado
+**Body**:
+
+```json
+{
+  "nombre": "Carlos Actualizado",
+  "apellido": "García",
+  "tel": 1234567890,
+  "mail": "carlos@example.com",
+  "frase": "¡Vamos a entrenar!",
+  "fotoUrl": "/public/uploads/entrenador/507f1f77bcf86cd799439017/foto.jpg",
+  "actividades": ["507f1f77bcf86cd799439016"]
+}
+```
+
+**Response** (200):
+
+```json
+{
+  "message": "entrenador actualizado",
+  "data": {
+    "id": "507f1f77bcf86cd799439017",
+    "nombre": "Carlos Actualizado",
+    "apellido": "García",
+    "tel": 1234567890,
+    "mail": "carlos@example.com",
+    "frase": "¡Vamos a entrenar!",
+    "fotoUrl": "/public/uploads/entrenador/507f1f77bcf86cd799439017/foto.jpg",
+    "actividades": []
+  }
+}
+```
 
 ---
 
@@ -1195,7 +1386,13 @@ Content-Type: application/json
 
 **Autenticación**: ✅ Requerida (Admin)
 
-**Response** (200): Entrenador eliminado
+**Response** (200):
+
+```json
+{
+  "message": "entrenador borrado"
+}
+```
 
 ---
 
@@ -1263,7 +1460,20 @@ Content-Type: application/json
 }
 ```
 
-**Response** (201): Membresía creada
+**Response** (201):
+
+```json
+{
+  "message": "Membresía creada",
+  "data": {
+    "id": "507f1f77bcf86cd799439012",
+    "nombre": "Plan Básico",
+    "descripcion": "Acceso a todas las clases",
+    "precio": 4999,
+    "meses": 1
+  }
+}
+```
 
 ---
 
@@ -1271,7 +1481,20 @@ Content-Type: application/json
 
 **Autenticación**: ✅ Requerida (Admin)
 
-**Response** (200): Membresía actualizada
+**Response** (200):
+
+```json
+{
+  "message": "Membresía actualizada",
+  "data": {
+    "id": "507f1f77bcf86cd799439012",
+    "nombre": "Plan Básico Renovado",
+    "descripcion": "Acceso a todas las clases",
+    "precio": 6999,
+    "meses": 1
+  }
+}
+```
 
 ---
 
@@ -1465,6 +1688,10 @@ Content-Type: application/json
 
 **Response** (200):
 
+Se devuelven 2 tipos de respuesta según el estado:
+
+**Sesión nueva creada**:
+
 ```json
 {
   "message": "Sesión de pago creada exitosamente",
@@ -1473,7 +1700,19 @@ Content-Type: application/json
 }
 ```
 
-**Nota**: si ya existe una sesión activa, el backend responde `200` con `message: "Ya existe una sesión de pago activa"` y `checkoutUrl`.
+**Sesión activa existente**:
+
+```json
+{
+  "message": "Ya existe una sesión de pago activa",
+  "checkoutUrl": "https://checkout.stripe.com/pay/cs_live_..."
+}
+```
+
+**Notas**:
+
+- Si es nueva: incluye `checkoutUrl` y `sessionId`
+- Si ya existe activa: solo incluye `checkoutUrl`, sin `sessionId`
 
 **Validaciones**:
 
