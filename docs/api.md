@@ -29,7 +29,7 @@
 
 - Todas las entidades usan IDs en formato `ObjectId` (MongoDB) serializado a `string`
 - Las respuestas suelen incluir `message` (descripción) y `data` (payload).
-- Nota: algunos endpoints devuelven únicamente `message` (sin `data`). Revisa la sección de endpoints para excepciones específicas.
+- Nota: algunos endpoints devuelven únicamente `message` (sin `data`).
 - Saneamiento de entrada en todos los endpoints
 
 ---
