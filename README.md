@@ -70,3 +70,9 @@ Para testear el flujo de pagos (Stripe Test Mode):
 - **Pagos Seguros:** Sincronización automática de membresías vía Webhooks.
 - **Schedulers:** Procesos automáticos de vencimiento de contratos y cierre de cupos.
 - **Feedback:** Sistema de valoración de entrenadores.
+
+### Nota Importante
+
+El backend puede tardar unos minutos en responder porque se desactiva por inactividad y necesita volver a arrancar.
+
+Si no ves clases disponibles, es porque las clases cargadas ya pasaron de fecha; en ese caso, deberás volver a correr la semilla para generar nuevas clases.
